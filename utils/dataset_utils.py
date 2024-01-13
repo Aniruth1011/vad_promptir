@@ -204,7 +204,7 @@ class VADDataset(Dataset):
         self.toTensor = ToTensor()
 
     def _init_clean_ids(self):
-        name_list = os.listdir(os.path.join(self.args.vad_dir , 'input'))[:1000]
+        name_list = os.listdir(os.path.join(self.args.vad_dir , 'input'))
 
         self.clean_ids+= [os.path.join(self.args.vad_dir , 'input') + '/' +  id_ for id_ in name_list]
 
@@ -221,7 +221,7 @@ class VADDataset(Dataset):
     
     def __len__(self):
 
-        return 1000 #len(self.clean_ids)
+        return len(self.clean_ids)
     
 
 
