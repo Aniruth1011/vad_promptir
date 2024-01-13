@@ -1,0 +1,88 @@
+{
+    "os": "Linux-5.15.133.1-microsoft-standard-WSL2-x86_64-with-glibc2.17",
+    "python": "3.8.11",
+    "heartbeatAt": "2024-01-07T03:20:30.620968",
+    "startedAt": "2024-01-07T03:20:29.251920",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--de_type",
+        "vad"
+    ],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "train.py",
+    "git": {
+        "remote": "https://github.com/va1shn9v/PromptIR.git",
+        "commit": "644e529287035ade5824f816f2caaf81883cbfb8"
+    },
+    "email": null,
+    "root": "/mnt/d/PromptIR",
+    "host": "aniruth1011",
+    "username": "aniruth",
+    "executable": "/home/aniruth/anaconda3/envs/promptir/bin/python",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 3302.3990000000003,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3302.399,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3302.399,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3302.399,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3302.399,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3302.399,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3302.399,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3302.399,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3302.399,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "total": 1006.853931427002,
+        "used": 32.90808868408203
+    },
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce GTX 1650",
+            "memory_total": 4294967296
+        }
+    ],
+    "memory": {
+        "total": 7.636699676513672
+    }
+}

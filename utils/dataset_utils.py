@@ -23,7 +23,7 @@ class PromptTrainDataset(Dataset):
         self.de_type = self.args.de_type
         print(self.de_type)
 
-        self.de_dict = {'denoise_15': 0, 'denoise_25': 1, 'denoise_50': 2, 'derain': 3, 'dehaze': 4, 'deblur' : 5}
+        self.de_dict = {'denoise_15': 0, 'denoise_25': 1, 'denoise_50': 2, 'derain': 3, 'dehaze': 4, 'deblur' : 5 , 'vad' : 6}
 
         self._init_ids()
         self._merge_ids()
@@ -42,9 +42,25 @@ class PromptTrainDataset(Dataset):
             self._init_rs_ids()
         if 'dehaze' in self.de_type:
             self._init_hazy_ids()
+        
+        if 'vad' in self.de_type:
+            self._init_vad_ids()
 
         random.shuffle(self.de_type)
+    
+    def _init_vad_ids(self):
 
+        ref_file = self.args.data_file_dir + "vad/vad.txt"
+        temp_ids = []
+        temp_ids+= [id_.strip() for id_ in open(ref_file)]
+        clean_ids = []
+        name_list = os.listdir(self.args.vad_dir)
+        clean_ids += [self.args.vad_dir + id_ for id_ in name_list if id_.strip() in temp_ids]
+        self.num_clean = len(clean_ids)
+
+        print("Total VAD Frames : {}".format(self.num_clean))
+        
+    
     def _init_clean_ids(self):
         ref_file = self.args.data_file_dir + "noisy/denoise_airnet.txt"
         temp_ids = []
@@ -173,6 +189,41 @@ class PromptTrainDataset(Dataset):
 
     def __len__(self):
         return len(self.sample_ids)
+
+class VADDataset(Dataset):
+
+    def __init__(self ,args):
+        super(VADDataset , self).__init__()
+
+        self.args = args
+        self.clean_ids = []
+        self.sigma = 5
+
+        self._init_clean_ids()
+
+        self.toTensor = ToTensor()
+
+    def _init_clean_ids(self):
+        name_list = os.listdir(os.path.join(self.args.vad_dir , 'input'))[:1000]
+
+        self.clean_ids+= [os.path.join(self.args.vad_dir , 'input') + '/' +  id_ for id_ in name_list]
+
+        self.num_clean = len(self.clean_ids)
+    
+    def __getitem__(self , clean_id):
+
+        clean_img = crop_img(np.array(Image.open(self.clean_ids[clean_id]).convert('RGB')), base=16)
+        clean_name = self.clean_ids[clean_id].split("/")[-1].split('.')[0]
+    
+        clean_img, noisy_img = self.toTensor(clean_img) , self.toTensor(clean_img)
+
+        return [clean_name , clean_name], noisy_img , clean_img
+    
+    def __len__(self):
+
+        return 1000 #len(self.clean_ids)
+    
+
 
 
 class DenoiseTestDataset(Dataset):
